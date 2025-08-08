@@ -61,10 +61,7 @@ public class TFNetwork {
         public static void handle(SyncUseDurationMsg msg, Supplier<NetworkEvent.Context> ctxSup) {
             NetworkEvent.Context ctx = ctxSup.get();
             ctx.enqueueWork(() -> {
-                Player player = Minecraft.getInstance().player;
-                if (player != null && player.isUsingItem()) {
-                    ((LocalPlayer) player).useItemRemaining = msg.duration;
-                }
+                TFClientEvents.setPendingDuration(msg.duration);
             });
             ctx.setPacketHandled(true);
         }
